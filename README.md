@@ -19,7 +19,14 @@ Projeto didático para as 3 primeiras aulas de Backend com Framework.
 def hello():
     return "Olá, mundo — esta é a rota /hello"
 
+**Exercício 2** crie `/hello/<nome>` que exiba `Olá, <nome>!` usando o parâmetro de ```python
+@app.route("/hello/<nome>")
+def hello_nome(nome):
+    return f"Olá, {nome}!"
+
 **Concluido!**
 Criamos uma rota que retorna hello no sistema.
+
+Criamos a rota hello<nome>, com o sistema rodando, acessamos a url http://127.0.0.1:5000/hello/ o nome que colocarmos, será exibido o comprimento: Olá, seguido do nome. 
 
 
