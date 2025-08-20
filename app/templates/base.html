@@ -9,10 +9,23 @@
 <header>
     <h1>Curso Backend com Flask</h1>
     <nav>
-        <a href="{{ url_for('index') }}">Exercicio</a> |
-        <a href="{{ url_for('ola_mundo') }}">Ola mundo</a> |
+        <a href="{{ url_for('index') }}">Início</a> |
+        <a href="{{ url_for('form') }}">Formulário</a> |
+        <a href="{{ url_for('api_dados') }}">API</a>
     </nav>
 </header>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flash-messages">
+      {% for category, message in messages %}
+        <li class="flash {{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <main>
     {% block content %}{% endblock %}
 </main>
