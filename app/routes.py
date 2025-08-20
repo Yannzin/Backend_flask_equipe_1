@@ -2,19 +2,18 @@ from flask import render_template, request, jsonify
 from app import app
 
 
-
+##Aula 2
 @app.route("/")
 def index():
-    return render_template("index.html", title="Página Inicial")
+    pessoas = [
+        {"id": 1, "nome": "Ryan"},
+        {"id": 1, "nome": "Ana"},
+        {"id": 1, "nome": "Anderson"}
+
+    ]
+    ##Exercicio 1 (Passar um título dinâmico)
+    titulo = request.args.get("titulo", "Página inicial")
+
+    return render_template("index.html",title="Página Inicial", pessoas = pessoas)
 
 
-## Aula1/Ex1
-@app.route("/olamundo")
-def ola_mundo():
-    ##return render_template("olamundo.html", title="Ola Mundo")
-    return "Olá, mundo — esta é a rota"
-
-##Aula1/Ex2
-@app.route("/hello/<nome>")
-def hello(nome):
-    return f"Olá, {nome}!"
