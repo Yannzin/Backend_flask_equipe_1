@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Veículos</title>
+</head>
+<body>
+    <h1>Veículos Cadastrados</h1>
+
+    <a href="{{ url_for('cadastrar_veiculo') }}">Cadastrar novo veículo</a>
+    <br><br>
+
+    <ul>
+        {% for id, v in veiculos.items() %}
+            <li>
+                <b>{{ v.modelo }}</b> - Placa: {{ v.placa }} - Cidade: {{ v.cidade }}
+                <a href="{{ url_for('localizacao', veiculo_id=id) }}">Ver localização</a>
+            </li>
+        {% else %}
+            <li>Nenhum veículo cadastrado.</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="{{ url_for('home') }}">Voltar ao início</a>
+</body>
+</html>

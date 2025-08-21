@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Localização do Veículo</title>
+</head>
+<body>
+    <h1>Localização do Veículo</h1>
+    <p>Placa: {{ veiculo['placa'] }}</p>
+    <p>Modelo: {{ veiculo['modelo'] }}</p>
+    <p>Cidade: {{ veiculo['cidade'] }}</p>
+    <a href="{{ url_for('listar_veiculos') }}">Voltar</a>
+</body>
+</html>

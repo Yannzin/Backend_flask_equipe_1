@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Veículo</title>
+</head>
+<body>
+    <h1>Cadastrar Veículo</h1>
+    <form method="POST">
+        <label>Placa:</label>
+        <input type="text" name="placa" required><br><br>
+
+        <label>Modelo:</label>
+        <input type="text" name="modelo" required><br><br>
+
+        <label>Cidade:</label>
+        <input type="text" name="cidade" required><br><br>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('listar_veiculos') }}">Voltar para lista</a>
+</body>
+</html>
