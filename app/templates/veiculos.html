@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Lista de Veículos</h2>
+
+<a href="{{ url_for('novo_veiculo') }}" class="btn btn-primary mb-3">+ Novo Veículo</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Placa</th>
+            <th>Modelo</th>
+            <th>Cor</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for veiculo in veiculos %}
+        <tr>
+            <td>{{ veiculo.id }}</td>
+            <td>{{ veiculo.placa }}</td>
+            <td>{{ veiculo.modelo }}</td>
+            <td>{{ veiculo.cor }}</td>
+            <td>
+                <a href="{{ url_for('editar_veiculo', id=veiculo.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                <form action="{{ url_for('excluir_veiculo', id=veiculo.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                </form>
+                <a href="{{ url_for('listar_localizacoes', veiculo_id=veiculo.id) }}" class="btn btn-sm btn-info">Localizações</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

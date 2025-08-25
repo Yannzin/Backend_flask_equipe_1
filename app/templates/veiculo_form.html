@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ title }}</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="placa" class="form-label">Placa</label>
+        <input type="text" class="form-control" id="placa" name="placa" value="{{ veiculo.placa if veiculo else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="modelo" class="form-label">Modelo</label>
+        <input type="text" class="form-control" id="modelo" name="modelo" value="{{ veiculo.modelo if veiculo else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="cor" class="form-label">Cor</label>
+        <input type="text" class="form-control" id="cor" name="cor" value="{{ veiculo.cor if veiculo else '' }}">
+    </div>
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{{ url_for('listar_veiculos') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
