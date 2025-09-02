@@ -48,7 +48,7 @@ Inicie o servidor: `flask run`
 Abra no navegador: `http://localhost:5000`
 
 ### Iniciando aplicação (Servidor)
-Inicie o servidor: `python run.py`
+Inicie o servidor: `python run.py`/ ou `python3 run.py`
 
 Depois acesse a url pelo navegador.
 
