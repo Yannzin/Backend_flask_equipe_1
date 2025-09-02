@@ -98,7 +98,7 @@ Abra no navegador: `http://localhost:5000`
 ```bash
 git init
 git add .
-git commit -m "Aula1 - rotas e templates"
+git commit -m "Projeto primeiro commit"
 git remote add origin https://github.com/SEU_USUARIO/NOME_REPOSITORIO.git
 git push -u origin main
 ```
