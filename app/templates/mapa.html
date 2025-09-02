@@ -1,16 +1,80 @@
 {% extends "base.html" %}
-{% block content %}
-<h2>Formulário</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.nome.label }}<br>
-        {{ form.nome(size=30) }}
-    </p>
-    <p>{{ form.submit() }}</p>
-</form>
 
-{% if mensagem %}
-    <p><strong>{{ mensagem }}</strong></p>
-{% endif %}
+{% block content %}
+<h1>Mapa de Veículos em Fortaleza</h1>
+<div id="map"></div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='leaflet/leaflet.css') }}">
+<script src="{{ url_for('static', filename='leaflet/leaflet.js') }}"></script>
+
+<style>
+#map {
+    height: 90vh;
+    width: 100%;
+
+}
+</style>
+
+<script>
+// Inicializa o mapa centralizado em Fortaleza
+const map = L.map('map').setView([-3.71722, -38.5434], 12);
+
+// Camada OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+).addTo(map);
+
+// Limites aproximados de Fortaleza
+const limites = {
+    latMin: -3.85,
+    latMax: -3.70,
+    lonMin: -38.60,
+    lonMax: -38.50
+};
+
+// Marcadores no mapa
+// Ícone customizado
+const iconeVeiculo = L.icon({
+    iconUrl: "{{ url_for('static', filename='img/car.png') }}",
+    iconSize: [32, 37],
+    iconAnchor: [16, 37],
+    popupAnchor: [0, -37]
+});
+
+// Marcadores no mapa
+const markers = {}; 
+
+// Função para movimentar veículo visualmente
+function moverVeiculo(pos) {
+    let lat = pos[0] + (Math.random() - 0.5) * 0.001;
+    let lon = pos[1] + (Math.random() - 0.5) * 0.001;
+
+    // Mantém dentro dos limites
+    lat = Math.max(Math.min(lat, limites.latMax), limites.latMin);
+    lon = Math.max(Math.min(lon, limites.lonMax), limites.lonMin);
+
+    return [lat, lon];
+}
+
+// Carrega localizações do servidor
+async function carregarLocalizacoes() {
+    const response = await fetch("/api/localizacoes");
+    const localizacoes = await response.json();
+
+    localizacoes.forEach(loc => {
+        if (markers[loc.veiculo_id]) {
+            // Atualiza posição do marcador existente
+            markers[loc.veiculo_id].setLatLng([loc.latitude, loc.longitude]);
+        } else {
+            // Cria marcador novo
+            markers[loc.veiculo_id] = L.marker([loc.latitude, loc.longitude], { icon: iconeVeiculo })
+                .addTo(map)
+                .bindPopup(`<b>Veículo ${loc.veiculo_id}</b><br>${loc.timestamp}`);
+        }
+    });
+}
+
+
+// Atualiza a cada 2 segundos
+carregarLocalizacoes();
+</script>
 {% endblock %}

@@ -1,37 +1,48 @@
-import os
 from flask import Flask, json
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
+from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
+import os
 
-# 1️⃣ Carrega o .env primeiro
+# Carregar .env correto dependendo do ambiente
 env_file = '.env.prod' if os.getenv('FLASK_ENV') == 'production' else '.env.dev'
 load_dotenv(env_file)
 
-# 2️⃣ Flask app
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
-# 3️⃣ Configurações gerais
+# Chaves de segurança
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key')
-app.config['DEBUG'] = os.getenv('DEBUG', 'False') == 'True'
-app.config['ENV'] = os.getenv('FLASK_ENV', 'development')
+app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY", "jwt-secret-dev")
+jwt = JWTManager(app)
 
-# 4️⃣ Configuração do banco de dados
+# Configuração do banco de dados
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-    'DATABASE_URL',
-    f"sqlite:///{os.path.join(basedir, 'app.db')}"  # fallback para SQLite
-)
+
+# Pega a URL do PostgreSQL do .env ou usa SQLite como fallback
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:root@localhost/localiza"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# 5️⃣ Inicializa DB e Migrate
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# 6️⃣ Corrige JSONEncoder se necessário
+# Ajuste do JSON Encoder
 if not hasattr(json, 'JSONEncoder'):
     from json import JSONEncoder
     json.JSONEncoder = JSONEncoder
 
-# 7️⃣ Importa rotas e models
-from app import routes, models
+# Configuração do Login Manager
+login_manager = LoginManager()
+login_manager.login_view = "index"
+login_manager.init_app(app)
+
+from app.models import Usuario
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Usuario.query.get(int(user_id))
+
+from app import routes

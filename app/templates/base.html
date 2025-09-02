@@ -9,10 +9,20 @@
 <header>
     <h1>🚗 Localiza</h1>
     <nav>
-        <a href="{{ url_for('index') }}">Início</a> |
+        {% if current_user.is_authenticated %}
+        <span>Olá, {{ current_user.nome }}!</span> |
         <a href="{{ url_for('listar_veiculos') }}">Veículos</a> |
         <a href="{{ url_for('novo_veiculo') }}">Cadastrar Veículo</a> |
+        <a href="{{ url_for('mapa') }}">Mapa</a> |
         <a href="{{ url_for('api_veiculos') }}">API Veículos</a> |
+        <a href="{{ url_for('perfil') }}">Perfil</a> |
+        <a href="{{ url_for('logout') }}">Sair</a>
+        {% else %}
+            <a href="{{ url_for('index') }}">Entrar</a> |
+            <a href="{{ url_for('form') }}">Criar conta</a>
+        {% endif %}
+
+        
     </nav>
 </header>
 

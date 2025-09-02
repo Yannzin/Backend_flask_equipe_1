@@ -1,10 +1,13 @@
 {% extends "base.html" %}
-{% block content %}
-<h2>Localizações do Veículo {{ veiculo.placa }} - {{ veiculo.modelo }}</h2>
 
-<table class="table table-bordered">
+{% block content %}
+<h2>Localizações do Veículo {{ veiculo.placa }} ({{ veiculo.modelo }})</h2>
+
+{% if localizacoes %}
+<table border="1" cellpadding="8" cellspacing="0">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Latitude</th>
             <th>Longitude</th>
             <th>Data/Hora</th>
@@ -13,6 +16,7 @@
     <tbody>
         {% for loc in localizacoes %}
         <tr>
+            <td>{{ loc.id }}</td>
             <td>{{ loc.latitude }}</td>
             <td>{{ loc.longitude }}</td>
             <td>{{ loc.timestamp.strftime("%d/%m/%Y %H:%M:%S") }}</td>
@@ -20,6 +24,9 @@
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<p>Nenhuma localização registrada para este veículo.</p>
+{% endif %}
 
-<a href="{{ url_for('listar_veiculos') }}" class="btn btn-secondary">Voltar</a>
+<a href="{{ url_for('listar_veiculos') }}" class="btn btn-danger">⬅ Voltar para veículos</a>
 {% endblock %}

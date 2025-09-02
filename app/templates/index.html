@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Bem-vindo,</h2>
-<p>Esta é a página inicial da nossa disciplina Backend com Frameworks.</p>
+<h2>Login</h2>
+<form method="post">
+  <label>Email</label>
+  <input type="email" name="email" required>
+  <br>
+  <label>Senha</label>
+  <input type="password" name="senha" required>
+  <br>
+  <button type="submit">Entrar</button>
+</form>
 {% endblock %}
