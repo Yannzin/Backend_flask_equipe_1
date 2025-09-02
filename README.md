@@ -54,12 +54,12 @@ Depois acesse a url pelo navegador.
 
 ## Para descobrir a url da aplicação
 
-        No terminal rode: ipconfig
-        Procure por:    Endereço IPv4:..... (Endereço/ ou Url) "Copie a url no seu navegador, seguido da porta"
+No terminal rode: ipconfig
+Procure por:    Endereço IPv4:..... (Endereço/ ou Url) "Copie a url no seu navegador, seguido da porta"
 
-        (:8000 Porta)
+(:8000 Porta)
 
-        Exemplo: 192.168.5.777:8000 
+Exemplo: 192.168.5.777:8000 
         
  
 
